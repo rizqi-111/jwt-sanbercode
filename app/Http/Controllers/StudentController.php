@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Student;
+use App\Loan;
+use App\Book;
 use JWTAuth;
 
 class StudentController extends Controller
@@ -35,7 +37,7 @@ class StudentController extends Controller
         ]);
 
         $student = Student::create([
-            'users_id' => $user->id,
+            'id' => $user->id,
             'nama' => $request->input('nama'),
             'nim' => $request->input('nim'),
             'fakultas' => $request->input('fakultas'),
@@ -67,8 +69,23 @@ class StudentController extends Controller
     }
 
     public function index(Request $request){
-        $student = Student::where('users_id',$request->user()->id)->get();
+        $student = Student::where('id',$request->user()->id)->get();
         
         return $student[0]->nama;
+    }
+
+    public function loan(Request $request){
+        $student_id = $request->user()->id;
+        $student = Student::find($student_id);
+
+        $book_id = $request->input('book_id');
+        $book = Book::find($book_id);
+
+        $loan = new Loan;
+        $loan->tanggal_pinjam = $request->input('tanggal_pinjam');
+        $loan->tanggal_pinjam_akhir = $request->input('tanggal_pinjam_akhir');
+        $loan->student()->associate($student);
+        $loan->book()->associate($book);
+        $loan->save();
     }
 }

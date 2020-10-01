@@ -10,10 +10,10 @@ class Student extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'users_id','nama', 'nim', 'fakultas', 'jurusan', 'no_hp', 'no_wa'
+        'id','nama', 'nim', 'fakultas', 'jurusan', 'no_hp', 'no_wa'
     ];
 
     public function loans(){
-        return $this->hasMany('App\Loan','student_id','users_id');
+        return $this->hasMany('App\Loan');
     }
 }

@@ -17,12 +17,12 @@ class CreateLoansTable extends Migration
             $table->bigIncrements('id');
             $table->datetime('tanggal_pinjam');
             $table->datetime('tanggal_pinjam_akhir');
-            $table->datetime('tanggal_kembali');
-            $table->boolean('ontime');
+            $table->datetime('tanggal_kembali')->nullable();
+            $table->boolean('ontime')->nullable();
             $table->bigInteger('student_id');
             $table->unsignedBigInteger('book_id');
 
-            $table->foreign('student_id')->references('users_id')->on('students');
+            $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('book_id')->references('id')->on('books');
         });
     }
