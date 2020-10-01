@@ -66,6 +66,8 @@ class StudentController extends Controller
 
     public function logout(Request $request){
         auth()->logout();
+
+        return "Berhasil Logout";
     }
 
     public function index(Request $request){
@@ -87,5 +89,7 @@ class StudentController extends Controller
         $loan->student()->associate($student);
         $loan->book()->associate($book);
         $loan->save();
+
+        return "Berhasil Meminjam Buku";
     }
 }
