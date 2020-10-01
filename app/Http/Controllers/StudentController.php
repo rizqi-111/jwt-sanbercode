@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Student;
+use JWTAuth;
 
 class StudentController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function register(Request $request){
         $request->validate([
              'username' => ['required','min:3','max:25'],
@@ -24,7 +30,7 @@ class StudentController extends Controller
 
         $user = User::create([
             'username' => $request->input('username'),
-            'password' => $request->input('password'),
+            'password' => bcrypt($request->input('password') ),
             'role' => $request->input('role'),
         ]);
 
@@ -39,5 +45,30 @@ class StudentController extends Controller
         ]); 
 
         return response('Berhasil Daftar');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('username','password','role');
+
+        try {
+            if (! $token = auth()->attempt(($credentials))) {
+                return response()->json(['error' => 'invalid_credentials'], 400);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'could_not_create_token'], 500);
+        }
+
+        return response()->json(compact('token'));
+    }
+
+    public function logout(Request $request){
+        auth()->logout();
+    }
+
+    public function index(Request $request){
+        $student = Student::where('users_id',$request->user()->id)->get();
+        
+        return $student[0]->nama;
     }
 }
