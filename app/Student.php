@@ -8,6 +8,8 @@ class Student extends Model
 {
     //
     protected $fillable = [
-        'nama', 'nim', 'fakultas', 'jurusan', 'no_hp', 'no_wa'
+        'users_id','nama', 'nim', 'fakultas', 'jurusan', 'no_hp', 'no_wa'
     ];
+
+    public $timestamps = false;
 }
