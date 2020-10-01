@@ -10,10 +10,10 @@ use JWTAuth;
 class StudentController extends Controller
 {
     //
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
 
     public function register(Request $request){
         $request->validate([
