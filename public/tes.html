@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="textarea" v-on:keyup.enter="cek" v-model = "ask"></input><br>
+        <br>
+        <component :is="currentView" :askk="ask"></component>
+    </div>
+
+    <template id = "temp" >
+        <div>
+            <button>+</button>
+            <p></p>{{ askk }} || TANGGAL || score : {{ skor }}</p>
+            <button>-</button>
+        </div>
+    </template>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+var word = ''
+    Vue.component('temp',{
+        template: '#temp',
+        props:['askk'],
+        data: function(){
+            return {
+                skor : 0
+            }
+        }
+    })
+    new Vue({
+        el:'#app',
+        data : {
+            ask : '',
+            currentView : ''
+        },
+        methods:{
+            cek(){
+                this.word = this.ask
+                console.log(this.word)
+                this.currentView = 'temp'
+            }
+        }
+    })
+</script>
+</body>
+</html>
