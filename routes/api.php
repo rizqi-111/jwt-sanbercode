@@ -13,3 +13,9 @@ Route::middleware(['role'])->group(function(){
     Route::GET('indexadmin','AdminController@index');
     Route::POST('kembali','AdminController@return');
 });
+
+Route::GET('read','BookController@getAll');
+Route::GET('show/{id}','BookController@show');
+Route::POST('addbook','BookController@store');
+Route::PUT('update/{id}','BookController@update');
+Route::DELETE('destroy/{id}','BookController@destroy');

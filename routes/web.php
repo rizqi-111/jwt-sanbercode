@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/crudVue',function () {
+    return view('crud_vue');
+});
